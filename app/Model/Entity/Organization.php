@@ -8,7 +8,7 @@ class Organization {
   public $id = 1;
 
   /** @var string $name Nome da organização */
-  public $name = 'HELP — Site';
+  public $name = 'HELP';
 
   /** @var string $site Site da organização */
   public $site = 'https://example.com';

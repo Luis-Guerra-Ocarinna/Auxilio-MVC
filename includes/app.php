@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . '\\..\\composer\\vendor\\autoload.php');
 
+use App\Http\Middleware\Queue as MiddlewareQueue;
 use \App\Utils\View;
 use \WilliamCosta\DatabaseManager\Database;
 use \WilliamCosta\DotEnv\Environment;
@@ -24,4 +25,14 @@ define('URL', getenv('URL'));
 // DEFININE O VALOR PADRÃO DAS VARIÁVEIS
 View::init([
   'URL' => URL
+]);
+
+// DEFINE O MAPEAMENTO DE MIDDLEWARES PADRÕES (EXECUTADOS EM TODAS AS ROTAS)
+MiddlewareQueue::setDefault([
+  'maintenance'
+]);
+
+// DEFINE O MAPEAMENTO DE MIDDLEWARES
+MiddlewareQueue::setMap([
+  'maintenance' => \App\Http\Middleware\Maintenance::class
 ]);
