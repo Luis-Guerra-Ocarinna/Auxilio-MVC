@@ -29,7 +29,7 @@ class Login extends Page {
     ]);
 
     // RETORNA A PÁGINA COMPLETA
-    return parent::getPage('Login > HELP', $content);
+    return parent::getPage('Login > {{name}}', $content);
   }
 
   /**

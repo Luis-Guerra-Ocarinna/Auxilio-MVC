@@ -3,7 +3,6 @@
 namespace App\Controller\Pages;
 
 use \App\Utils\View;
-use \App\Model\Entity\Organization;
 
 class Home extends Page {
 
@@ -17,6 +16,6 @@ class Home extends Page {
     $content =  View::render('pages\\home');
 
     // RETORNA A VIEW DA PÁGINA 
-    return parent::getPage('HOME > HELP', $content);
+    return parent::getPage('HOME > {{name}}', $content);
   }
 };

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Model\Entity\Organization;
 use App\Utils\View;
 
 class Page {
@@ -15,9 +16,14 @@ class Page {
    * @return  string            
    */
   public static function getPage(string $title, string $content) {
+    // ORGANIZAÇÃO
+    $obOrganization = new Organization;
+    
     return View::render('admin\\page', [
       'title'   => $title,
-      'content' => $content
+      'content' => $content,
+      'name'    => $obOrganization->name
+      
     ]);
   }
 }

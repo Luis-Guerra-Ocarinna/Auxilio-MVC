@@ -63,7 +63,7 @@ class Testimony extends Page {
     ]);
 
     // RETORNA A VIEW DA PÁGINA 
-    return parent::getPage('DEPOIMENTOS > HELP', $content);
+    return parent::getPage('DEPOIMENTOS > {{name}}', $content);
   }
 
   /**

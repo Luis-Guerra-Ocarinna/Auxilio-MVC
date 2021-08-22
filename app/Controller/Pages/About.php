@@ -24,6 +24,6 @@ class About extends Page {
     ]);
 
     // RETORNA A VIEW DA PÁGINA 
-    return parent::getPage('SOBRE > HELP', $content);
+    return parent::getPage('SOBRE > {{name}}', $content);
   }
 };
