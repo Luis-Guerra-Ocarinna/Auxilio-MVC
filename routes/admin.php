@@ -1,45 +1,13 @@
 <?php
 
-use \App\Http\Response;
-use \App\Controller\Admin;
-use App\Http\Request;
+// INCLUI AS ROTAS DE HOME
+require_once(__DIR__ . '\\admin\\home.php');
 
-// ROTA ADMIN
-$obRouter->get('/admin', [
-  'middlewares' => [
-    'required-admin-login'
-  ],
-  function () {
-    return new Response(200, 'Admin 😀');
-  }
-]);
+// INCLUI AS ROTAS DE LOGIN
+require_once(__DIR__ . '\\admin\\login.php');
 
-// ROTA LOGIN
-$obRouter->get('/admin/login', [
-  'middlewares' => [
-    'required-admin-logout'
-  ],
-  function (Request $request) {
-    return new Response(200, Admin\Login::getLogin($request));
-  }
-]);
+// INCLUI AS ROTAS DE DEPOIMENTOS
+require_once(__DIR__ . '\\admin\\testimonies.php');
 
-// ROTA LOGIN (INSERT)
-$obRouter->post('/admin/login', [
-  'middlewares' => [
-    'required-admin-logout'
-  ],
-  function (Request $request) {
-    return new Response(200, Admin\Login::setLogin($request));
-  }
-]);
-
-// ROTA LOGOUT
-$obRouter->get('/admin/logout', [
-  'middlewares' => [
-    'required-admin-login'
-  ],
-  function (Request $request) {
-    return new Response(200, Admin\Login::setLogout($request));
-  }
-]);
+// INCLUI AS ROTAS DE USUÁRIOS
+require_once(__DIR__ . '\\admin\\users.php');

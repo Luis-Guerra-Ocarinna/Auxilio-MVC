@@ -30,6 +30,7 @@ class Testimony {
     // $this->data = date('Y-m-d H:i:s');
     $this->data = (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('Y-m-d H:i:s');
 
+    // INSERE O DEPOIMENTO NO BANCO DE DADOS
     $this->id = (new Database('depoimentos'))->insert([
       'nome'     => $this->nome,
       'mensagem' => $this->mensagem,
@@ -38,6 +39,40 @@ class Testimony {
 
     // SUCESSO
     return true;
+  }
+
+  /**
+   * Método responsável por atualizar os dados do banco com a intância atual no banco de dados
+   *
+   * @return  boolean
+   */
+  public function atualizar() {
+    // ATUALIZA O DEPOIMENTO NO BANCO DE DADOS
+    return (new Database('depoimentos'))->update('id = ' . $this->id, [
+      'nome'     => $this->nome,
+      'mensagem' => $this->mensagem
+    ]);
+  }
+
+  /**
+   * Método responsável por excluir um depoimento do banco
+   *
+   * @return  boolean
+   */
+  public function excluir() {
+    // EXCLUI O DEPOIMENTO DO BANCO DE DADOS
+    return (new Database('depoimentos'))->delete('id = ' . $this->id);
+  }
+
+  /**
+   * Método responsável por retornar um depoimento combase no seu id
+   *
+   * @param   integer  $id  
+   *
+   * @return  Testimony    
+   */
+  public static function getTestimonyById(int $id) {
+    return self::getTestimonies('id = ' . $id)->fetchObject(self::class);
   }
 
   /**
@@ -50,7 +85,7 @@ class Testimony {
    *
    * @return  PDOStatement
    */
-  public static function getTestimonies($where = null, $order = null, $limit = null, $fields = '*') {
+  public static function getTestimonies(string $where = null, string $order = null, string $limit = null, string $fields = '*') {
     return (new Database('depoimentos'))->select($where, $order, $limit, $fields);
   }
 }

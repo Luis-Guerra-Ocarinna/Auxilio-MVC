@@ -19,9 +19,7 @@ class Login extends Page {
    */
   public static function getLogin(Request $request, ?string $errorMessage = null) {
     // STATUS
-    $status = !is_null($errorMessage) ? View::render('admin\\login\\status', [
-      'mensagem' => $errorMessage
-    ]) : '';
+    $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
 
     // CONTÚDO DA PÁGINA DE LOGIN
     $content = View::render('admin\\login', [
@@ -45,10 +43,10 @@ class Login extends Page {
 
     // BUSCA USUÁRIO PELO E-MAIL
     $obUser = User::getUserByEmail($email);
-    if (!$obUser instanceof User) return self::getLogin($request, 'E-mail ou senha inválidos');
+    if (!$obUser instanceof User) return self::getLogin($request, 'E-mail inválido');
 
     // VERIFICA A SENHA DO USUÁRIO
-    if (!password_verify($senha, $obUser->senha)) return self::getLogin($request, 'E-mail ou senha inválidos');
+    if (!password_verify($senha, $obUser->senha)) return self::getLogin($request, 'Senha inválida');
 
     # Poderia ser:
     // if ((!$obUser instanceof User) || (!password_verify($senha, $obUser->senha))) return self::getLogin($request, 'E-mail ou senha inválidos');
