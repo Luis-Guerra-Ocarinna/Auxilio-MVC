@@ -10,9 +10,9 @@ class Testimony extends Api {
 
 
   /**
-   * Método responsável por obter a renderização dos itens de depoimentos para a página
+   * Método responsável por obter a renderização dos itens de depoimentos para a api
    *
-   * @param   Request $request
+   * @param   Request    $request
    * @param   Pagination $obgPagination
    * 
    * @return  string
@@ -36,7 +36,6 @@ class Testimony extends Api {
 
     // RENDERIZA O(S) ITEM(S)
     while ($obTestimony = $results->fetchObject(EntityTestimony::class)) {
-      // VIEW DA DEPOIMENTOS
       $itens[] = [
         'id'       => (int) $obTestimony->id,
         'nome'     => $obTestimony->nome,
@@ -79,7 +78,7 @@ class Testimony extends Api {
     $obTestimony = EntityTestimony::getTestimonyById($id);
 
     // VALIDA SE O DEPOIMENTO EXISTE
-    if (!$obTestimony instanceof EntityTestimony) throw new \Exception("O depoimento $id não foi encontrado", 404);
+    if (!$obTestimony instanceof EntityTestimony) throw new \Exception("O depoimento($id) não foi encontrado", 404);
 
     // RETORNA OS DETALHES DO DEPOIMENTO
     return [
@@ -87,6 +86,92 @@ class Testimony extends Api {
       'nome'     => $obTestimony->nome,
       'mensagem' => $obTestimony->mensagem,
       'data'     => $obTestimony->data
+    ];
+  }
+
+  /**
+   * Método responsável por cadastrar um novo depoimento
+   *
+   * @param   Request  $request  
+   */
+  public static function setNewTestimony(Request $request) {
+    // POST VARS
+    $postVars = $request->getPostVars();
+
+    // VALIDA OS CAMPOS OBRIGÁTORIOS
+    if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) throw new \Exception("Os campos 'nome' e 'mensagem' são obrigatórios", 400);
+
+    // NOVO DEPOIMENTO
+    $obTestimony = new EntityTestimony;
+    $obTestimony->nome     = $postVars['nome'];
+    $obTestimony->mensagem = $postVars['mensagem'];
+    $obTestimony->cadastrar();
+
+    // RETORNA OS DETALHES DO DEPOIMENTO CADASTRADO
+    return [
+      'id'       => (int) $obTestimony->id,
+      'nome'     => $obTestimony->nome,
+      'mensagem' => $obTestimony->mensagem,
+      'data'     => $obTestimony->data
+    ];
+  }
+
+  /**
+   * Método responsável por atualizar um depoimento
+   *
+   * @param   Request  $request  
+   */
+  public static function setEditTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
+    // POST VARS
+    $postVars = $request->getPostVars();
+
+    // VALIDA OS CAMPOS OBRIGÁTORIOS
+    if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) throw new \Exception("Os campos 'nome' e 'mensagem' são obrigatórios", 400);
+
+    // BUSCA O DEPOIMENTO NO BANCO
+    $obTestimony = EntityTestimony::getTestimonyById($id);
+
+    // VALIDA A INSTÂNCIA
+    if (!$obTestimony instanceof EntityTestimony) throw new \Exception("O depoimento($id) não foi encontrado", 404);
+
+    // ATUALIZA O DEPOIMENTO
+    $obTestimony->nome     = $postVars['nome'];
+    $obTestimony->mensagem = $postVars['mensagem'];
+    $obTestimony->atualizar();
+
+    // RETORNA OS DETALHES DO DEPOIMENTO ATUALIZADO
+    return [
+      'id'       => (int) $obTestimony->id,
+      'nome'     => $obTestimony->nome,
+      'mensagem' => $obTestimony->mensagem,
+      'data'     => $obTestimony->data
+    ];
+  }
+
+  /**
+   * Método responsável por excluir um depoimento
+   *
+   * @param   Request  $request  
+   */
+  public static function setDeleteTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
+    // BUSCA O DEPOIMENTO NO BANCO
+    $obTestimony = EntityTestimony::getTestimonyById($id);
+
+    // VALIDA A INSTÂNCIA
+    if (!$obTestimony instanceof EntityTestimony) throw new \Exception("O depoimento($id) não foi encontrado", 404);
+
+    // EXCLUI O DEPOIMENTO
+    $obTestimony->excluir();
+
+    // RETORNA O SUCESSO DO DEPOIMENTO EXLCUIDO
+    return [
+      'sucesso' => true,
     ];
   }
 }
