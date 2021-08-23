@@ -38,5 +38,6 @@ MiddlewareQueue::setMap([
   'required-admin-logout' => \App\Http\Middleware\RequireAdminLogout::class,
   'required-admin-login'  => \App\Http\Middleware\RequireAdminLogin::class,
   'api'                   => \App\Http\Middleware\Api::class,
-  'user-basic-auth'       => \App\Http\Middleware\UserBasicAuth::class
+  'user-basic-auth'       => \App\Http\Middleware\UserBasicAuth::class,
+  'jwt-auth'              => \App\Http\Middleware\JWTAuth::class
 ]);
