@@ -13,5 +13,8 @@ include(__DIR__ . '\\routes\\pages.php');
 // INCLUI AS ROTAS DO PAINEL
 include(__DIR__ . '\\routes\\admin.php');
 
+// INCLUI AS ROTAS DO API
+include(__DIR__ . '\\routes\\api.php');
+
 // IMPREME O RESPONSE DA ROTA
 $obRouter->run()->sendResponse();

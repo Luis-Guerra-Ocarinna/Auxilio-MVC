@@ -17,7 +17,7 @@ class User extends Page {
    * 
    * @return  string
    */
-  private static function getUsersItems(Request $request, Pagination &$obgPagination) {
+  private static function getUsersItems(Request $request, &$obgPagination) {
     // USUÁRIOS
     $itens = '';
 
@@ -154,7 +154,10 @@ class User extends Page {
    *
    * @return  string             
    */
-  public static function getEditUser(Request $request, int $id) {
+  public static function getEditUser(Request $request, $id) {
+    // VALIDA O ID DO USUÁRIO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O USUÁRIO DO BANCO DE DADOS
     $obUser = EntityUser::getUserById($id);
 
@@ -180,7 +183,10 @@ class User extends Page {
    *
    * @return  string             
    */
-  public static function setEditUser(Request $request, int $id) {
+  public static function setEditUser(Request $request, $id) {
+    // VALIDA O ID DO USUÁRIO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O USUÁRIO DO BANCO DE DADOS
     $obUser = EntityUser::getUserById($id);
 
@@ -218,7 +224,10 @@ class User extends Page {
    *
    * @return  string             
    */
-  public static function getDeleteUser(Request $request, int $id) {
+  public static function getDeleteUser(Request $request, $id) {
+    // VALIDA O ID DO USUÁRIO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O USUÁRIO DO BANCO DE DADOS
     $obUser = EntityUser::getUserById($id);
 
@@ -243,7 +252,10 @@ class User extends Page {
    *
    * @return  string             
    */
-  public static function setDeleteUser(Request $request, int $id) {
+  public static function setDeleteUser(Request $request, $id) {
+    // VALIDA O ID DO USUÁRIO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O USUÁRIO DO BANCO DE DADOS
     $obUser = EntityUser::getUserById($id);
 

@@ -39,7 +39,7 @@ $obRouter->get('/admin/users/{id}/edit', [
   'middlewares' => [
     'required-admin-login'
   ],
-  function (Request $request, int $id) {
+  function (Request $request, $id) {
     return new Response(200, Admin\User::getEditUser($request, $id));
   }
 ]);
@@ -49,7 +49,7 @@ $obRouter->post('/admin/users/{id}/edit', [
   'middlewares' => [
     'required-admin-login'
   ],
-  function (Request $request, int $id) {
+  function (Request $request, $id) {
     return new Response(200, Admin\User::setEditUser($request, $id));
   }
 ]);
@@ -59,7 +59,7 @@ $obRouter->get('/admin/users/{id}/delete', [
   'middlewares' => [
     'required-admin-login'
   ],
-  function (Request $request, int $id) {
+  function (Request $request, $id) {
     return new Response(200, Admin\User::getDeleteUser($request, $id));
   }
 ]);
@@ -69,7 +69,7 @@ $obRouter->post('/admin/users/{id}/delete', [
   'middlewares' => [
     'required-admin-login'
   ],
-  function (Request $request, int $id) {
+  function (Request $request, $id) {
     return new Response(200, Admin\User::setDeleteUser($request, $id));
   }
 ]);

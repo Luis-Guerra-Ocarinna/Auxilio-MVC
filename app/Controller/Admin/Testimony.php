@@ -142,7 +142,10 @@ class Testimony extends Page {
    *
    * @return  string             
    */
-  public static function getEditTestimony(Request $request, int $id) {
+  public static function getEditTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O DEPOIMENTO DO BANCO DE DADOS
     $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -168,7 +171,10 @@ class Testimony extends Page {
    *
    * @return  string             
    */
-  public static function setEditTestimony(Request $request, int $id) {
+  public static function setEditTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O DEPOIMENTO DO BANCO DE DADOS
     $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -195,7 +201,10 @@ class Testimony extends Page {
    *
    * @return  string             
    */
-  public static function getDeleteTestimony(Request $request, int $id) {
+  public static function getDeleteTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O DEPOIMENTO DO BANCO DE DADOS
     $obTestimony = EntityTestimony::getTestimonyById($id);
 
@@ -220,7 +229,10 @@ class Testimony extends Page {
    *
    * @return  string             
    */
-  public static function setDeleteTestimony(Request $request, int $id) {
+  public static function setDeleteTestimony(Request $request, $id) {
+    // VALIDA O ID DO DEPOIMENTO
+    if (!is_numeric($id)) return throw new \Exception("O id '$id' não é válido", 400);
+
     // OBTÉM O DEPOIMENTO DO BANCO DE DADOS
     $obTestimony = EntityTestimony::getTestimonyById($id);
 
