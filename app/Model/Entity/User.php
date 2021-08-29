@@ -34,7 +34,7 @@ class User {
    *
    * @param   integer  $id  
    *
-   * @return  Testimony    
+   * @return  User    
    */
   public static function getUserById(int $id) {
     return self::getUsers('id = ' . $id)->fetchObject(self::class);

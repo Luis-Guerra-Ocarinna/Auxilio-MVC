@@ -21,7 +21,11 @@ $obRouter->get('/sobre', [
 // ROTA DINÂMICA
 $obRouter->get('/pagina/{idPagina}/{acao}', [
   function ($idPagina, $acao) {
-    return new Response(200, 'Página ' . $idPagina . ' - ' .  $acao);
+    return new Response(200, 'Página ' . $idPagina . ' - ' .  $acao . "
+    <br> <a id='inicio'>Salve</a>
+    <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> <br> <br> <hr> 
+    <input type='button' value='Retornar' onclick='location.href = \"#inicio\";'/>
+    ");
   }
 ]);
 // */
