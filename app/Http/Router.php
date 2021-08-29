@@ -85,6 +85,9 @@ class Router {
       $params['variables'] = $matches[1];
     }
 
+    // REMOVE A BARRA NO FINAL DA ROTA  pq so não deixar a raiz sem barra??
+    $route = rtrim($route, '/');
+
     // PADRÂO DE VÀLIDAÇÂO DA URL
     $patternRoute = '/^' . str_replace('/', '\/', $route) . '$/';
 
@@ -137,7 +140,7 @@ class Router {
    *
    * @return string
    */
-  private function getUri() {
+  public function getUri() {
     $uri = $this->request->getUri();
 
     // FATIA A URI COM PREFIXO

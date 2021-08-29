@@ -8,7 +8,8 @@ use App\Http\Response;
 $obRouter->get('/api/v1/users', [
   'middlewares' => [
     'api',
-    'user-basic-auth'
+    'user-basic-auth',
+    'cache'
   ],
   function (Request $request) {
     return new Response(200, Api\User::getUsers($request), 'application/json');
@@ -30,7 +31,8 @@ $obRouter->get('/api/v1/users/me', [
 $obRouter->get('/api/v1/users/{id}', [
   'middlewares' => [
     'api',
-    'user-basic-auth'
+    'user-basic-auth',
+    'cache'
   ],
   function (Request $request, $id) {
     return new Response(200, Api\User::getUser($request, $id), 'application/json');

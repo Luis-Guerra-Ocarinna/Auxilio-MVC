@@ -18,7 +18,7 @@ class JWTAuth {
    */
   private function getJWTAuthUser(Request $request) {
     // HEADERS
-    $headers = $request->getHeader();
+    $headers = $request->getHeaders();
 
     // TOKEN PURO EM JWT
     $jwt = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers['Authorization']) : '';

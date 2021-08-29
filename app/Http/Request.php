@@ -109,7 +109,7 @@ class Request {
    * Método responsável por retornar os headers da requisição
    * @return array
    */
-  public function getHeader() {
+  public function getHeaders() {
     return $this->headers;
   }
 }
