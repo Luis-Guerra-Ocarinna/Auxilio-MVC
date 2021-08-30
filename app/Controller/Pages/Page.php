@@ -26,6 +26,31 @@ class Page {
   }
 
   /**
+   * Método responsável por retornar um link da paginação
+   *
+   * @param   array   $queryParams  
+   * @param   array   $page         
+   * @param   string  $url          
+   * @param   string  $label          
+   *
+   * @return  string                
+   */
+  private static function getPaginationLink($queryParams, $page, $url, $label = null) {
+    // ALTERA PÁGINA
+    $queryParams['page'] = $page['page'];
+
+    // LINK
+    $link = $url . '?' . http_build_query($queryParams);
+
+    // VIEW
+    return View::render('\\pages\\pagination\\link', [
+      'page'   => $label ?? $page['page'],
+      'link'   => $link,
+      'active' => $page['current'] ? 'active' : ''
+    ]);
+  }
+
+  /**
    * Método responsável por renderizar o layout de paginação
    *
    * @param   Request  $request
@@ -49,20 +74,44 @@ class Page {
     // QUERY
     $queryParams = $request->getQueryParams();
 
+    // PÁGINA ATUAL
+    $currentPage = $queryParams['page'] ?? 1;
+
+    // LIMITE DE PÁGINAS
+    $limit = getenv('PAGINATION_LIMIT');
+
+    // MEIO DA PAGINAÇÃO
+    $middle = ceil($limit / 2);
+
+    // INICIO DA PAGINAÇÃO
+    $start = $middle > $currentPage ? 0 : $currentPage - $middle;
+
+    // AJUSTA O FINAL DA PAGINAÇÃO
+    $end = $limit + $start;
+
+    // AJUSRA O INÍCIO DA PAGINAÇÃO
+    if ($end > count($pages)) {
+      $diff = $end - count($pages);
+      $start -= $diff;
+    }
+
+    // LINK INICIAL
+    if ($start > 0) {
+      $links .= self::getPaginationLink($queryParams, reset($pages), $url, '<<');
+    }
+
     // RENDERIZA OS LINKS
     foreach ($pages as $page) {
-      // ALTERA PÁGINA
-      $queryParams['page'] = $page['page'];
+      // VERIFICA O START DA PAGINAÇÃO
+      if ($page['page'] <= $start) continue;
 
-      // LINK
-      $link = $url . '?' . http_build_query($queryParams);
+      // VERIFICA O END DA PAGINAÇÃO
+      if ($page['page'] > $end) {
+        $links .= self::getPaginationLink($queryParams, end($pages), $url, '>>');
+        break;
+      }
 
-      // VIEW
-      $links .= View::render('\\pages\\pagination\\link', [
-        'page'   => $page['page'],
-        'link'   => $link,
-        'active' => $page['current'] ? 'active' : ''
-      ]);
+      $links .= self::getPaginationLink($queryParams, $page, $url);
     }
 
     // RENDERIZA BOX DE PAGINAÇÃO
@@ -82,7 +131,7 @@ class Page {
   public static function getPage($title, $content) {
     // ORGANIZAÇÃO
     $obOrganization = new Organization;
-    
+
     return View::render('pages\\page', [
       'title'   => $title,
       'header'  => self::getHeader(),
