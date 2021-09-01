@@ -28,8 +28,15 @@ class Testimony extends Page {
     $queryParams = $request->getQueryParams();
     $paginaAtual = $queryParams['page'] ?? 1;
 
+    // LIMITE POR PÁGINA
+    $limit = $queryParams['per_page'] ?? 3;
+    $limit = is_numeric($limit) ? $limit : 3;
+
+    // VALIDANDO SE DEVE MOSTRAR TODOS
+    $limit = $limit > 0 ? $limit : $quantitadetotal;
+
     // INSTÂNCIA DE PAGINAÇÃO
-    $obgPagination = new Pagination($quantitadetotal, $paginaAtual, 3);
+    $obgPagination = new Pagination($quantitadetotal, $paginaAtual, $limit);
 
     // RESULTADOS DA PÁGINA
     $results = EntityTestimony::getTestimonies(null, 'id DESC', $obgPagination->getLimit());
